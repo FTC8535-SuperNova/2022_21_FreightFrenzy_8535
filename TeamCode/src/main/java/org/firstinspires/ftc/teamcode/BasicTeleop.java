@@ -53,7 +53,7 @@ import java.util.concurrent.Executors;
  *
  *
  */
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="Basic: Linear OpMode")
 
 public class BasicTeleop extends LinearOpMode {
 
@@ -61,9 +61,10 @@ public class BasicTeleop extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
-    private Servo armServo = null;
+    private Servo clawServo = null;
     private DcMotor armMotor = null;
     private CRServo duckServo = null;
+
 
 
 
@@ -79,7 +80,7 @@ public class BasicTeleop extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        armServo = hardwareMap.get(Servo.class, "claw_servo");
+        clawServo = hardwareMap.get(Servo.class, "claw_servo");
         armMotor = hardwareMap.get(DcMotor.class,"arm_motor");
         duckServo = hardwareMap.get(CRServo.class, "duck_servo");
 
@@ -108,19 +109,9 @@ public class BasicTeleop extends LinearOpMode {
 
 
 
-            // Set the servo positions based on what button is pressed
-            if (gamepad2.a){
-                armServo.setPosition(0.90);
-
-            } else if (gamepad2.b){
-                armServo.setPosition(0.30);
-
-            } // end servo control if/else if
-
-
 
             // This is an E-Stop or Emergency stop, there is one on the phone, but this one has additional clauses that make it specific to the program, additionally it does not require the operator to put down the controller first
-            if (gamepad2.left_trigger == 1 && gamepad2.right_trigger == 1|| gamepad1.left_trigger == 1 && gamepad2.right_trigger == 1){
+            if (gamepad2.left_trigger == 1 && gamepad2.right_trigger == 1 || gamepad1.left_trigger == 1 && gamepad2.right_trigger == 1){
                 RobotLog.addGlobalWarningMessage("E-Stop triggered!"); // This is how you declare warning messages that stick around after program stop
 
                 leftDrive.setPower(0);
@@ -138,10 +129,10 @@ public class BasicTeleop extends LinearOpMode {
 
             // This is to control the servo for the claw
             if (gamepad2.a) {
-                armServo.setPosition(0.90);
+                clawServo.setPosition(0.90);
 
             } else if (gamepad2.b){
-                armServo.setPosition(0.30);
+                clawServo.setPosition(0.30);
 
             } // end claw servo if/else if
 

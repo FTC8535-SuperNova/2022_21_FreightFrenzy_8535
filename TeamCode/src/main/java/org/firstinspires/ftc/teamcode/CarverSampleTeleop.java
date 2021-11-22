@@ -78,10 +78,6 @@ public class CarverSampleTeleop extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
 
-
-
-
-
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
@@ -92,8 +88,8 @@ public class CarverSampleTeleop extends LinearOpMode {
         duckServo =  hardwareMap.get(CRServo.class, "duck_servo");
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         telemetry.addData("Status", "Resetting Encoders");
         telemetry.update();
@@ -107,6 +103,9 @@ public class CarverSampleTeleop extends LinearOpMode {
         // You cannot be in DcMotor.RunMode.RUN_TO_POSITION without having a target pos
         armMotor.setTargetPosition(0);
 
+
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         // All setModes must be done after hardware init
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -119,11 +118,8 @@ public class CarverSampleTeleop extends LinearOpMode {
 
         // Some variables for use in the loop, these have set values at the start and as such they are outside of the loop
         double powerMultiplier = 0.75;
-        int lastPosition= 0; // The brake position that the robot has set
-        boolean isFirstZeroOfStick = true; // Is this the first iteration of the loop where the left stick is zero?
-        int targetAddition = 0; // Variable for math
+        double targetAddition = 0; // Variable for math
         boolean servoIsRunning = false; // Variable for toggleable servo
-        long loopIterations = 0; // How many iterations has the loop done, used to decrease polling rate. Eg. poll every 5 iterations
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -133,7 +129,7 @@ public class CarverSampleTeleop extends LinearOpMode {
             double rightPower;
 
             // This is an E-Stop or Emergency stop, there is one on the phone, but this one has additional clauses that make it specific to the program, additionally it does not require the operator to put down the controller first
-            if (gamepad2.left_trigger == 1 && gamepad2.right_trigger == 1|| gamepad1.left_trigger == 1 && gamepad2.right_trigger == 1){
+            if (gamepad2.left_trigger == 1 && gamepad2.right_trigger == 1|| gamepad1.left_trigger == 1 && gamepad1.right_trigger == 1){
                 RobotLog.addGlobalWarningMessage("E-Stop triggered!"); // This is how you declare warning messages that stick around after program stop
 
                 leftDrive.setPower(0);
@@ -171,7 +167,7 @@ public class CarverSampleTeleop extends LinearOpMode {
                 duckServo.setDirection(DcMotorSimple.Direction.REVERSE);
                 servoIsRunning = true;
 
-            } else if (servoIsRunning && gamepad2.x || gamepad2.y){ // if it is running, this will set it's status to not running, and stop it
+            } else if ((servoIsRunning && gamepad2.x) || (servoIsRunning && gamepad2.y)){ // if it is running, this will set it's status to not running, and stop it
                 servoIsRunning=false;
                 duckServo.setPower(0);
 
@@ -183,12 +179,9 @@ public class CarverSampleTeleop extends LinearOpMode {
                 powerMultiplier = 1; // 1 is full speed, you get the idea
 
             } else if (gamepad1.b){
-                powerMultiplier = 0.75;
-
-            } else if (gamepad1.y){
                 powerMultiplier = 0.5;
 
-            } else if (gamepad1.x){
+            } else if (gamepad1.y){
                 powerMultiplier = 0.2;
 
             } // end v-gearshift  if/else if/else if/else if
@@ -197,37 +190,17 @@ public class CarverSampleTeleop extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = -gamepad1.left_stick_y;
-            double turn  =  -gamepad1.left_stick_x;
+            double drive = gamepad1.left_stick_y;
+            double turn  =  gamepad1.left_stick_x;
 
             leftPower    = Range.clip((drive + turn)*powerMultiplier, -1.0, 1.0);
             rightPower   = Range.clip((drive - turn)*powerMultiplier, -1.0, 1.0);
 
 
-
-            // Oh boy here comes the encoder stuff...
-
-
-            if (gamepad2.left_stick_y == 0 && isFirstZeroOfStick){ // If this is the first iteration of the loop with nobody moving the controller
-                lastPosition = armMotor.getTargetPosition(); // Then set our brake to the current position
-                isFirstZeroOfStick = false; // And tell all future iterations that we've handled the brake position.
-
-            } else if (gamepad2.left_stick_y == 0){ // This part of the same selection block, if the first if statement is true, this will not execute, if nobody is trying to move, AND (this is NOT the first loop (implied))
-                telemetry.addData("Arm locked!", ""); // Then we just tell people that the brake is engaged
-
-            } else if (gamepad1.left_stick_y != 0){ // If someone is trying to move the arm, by moving the stick,
-                isFirstZeroOfStick = true; // Then we set this back to true so the next time the stick is zero, it re-engages the brake
-                lastPosition = 0; // And then we disengage the brake so that it doesn't counteract our movements
-
-            }
-
-            if (loopIterations%5/* The % operator tells you the remainder, if the first value is divisible by the second value, it returns zero, so this will only be true every x loops*/ == 0) { // Here we have the polling rate issue, the loop runs several hundred times per ms, and it checks values per loop, this means that by adding the values from the controller together, every iteration, we are going to get a very large value, very fast. This is resolved by not adding the values every iteration but every x iterations
-                targetAddition = (int) ((gamepad2.left_stick_y) * COUNTS_PER_CM) + targetAddition; // by adding it to itself, you can give it high values regardless of motor position
-            }
-
-            armMotor.setTargetPosition(lastPosition+targetAddition); // Sets the position that the arm wants to go to
+            targetAddition += ((gamepad2.left_stick_y) * COUNTS_PER_CM)/100; // by adding it to itself, you can give it high values regardless of motor position
 
 
+            armMotor.setTargetPosition((int)targetAddition); // Sets the position that the arm wants to go to
 
 
             // Send calculated power to wheels, and tell the arm to use full power when moving, this can be modified later to prevent overshoots, but its fine for now
@@ -239,16 +212,10 @@ public class CarverSampleTeleop extends LinearOpMode {
             // Show a bunch of variables for debugging
             telemetry.addData("TargetPos: ", armMotor.getTargetPosition());
             telemetry.addData("CurrentPos: ", armMotor.getCurrentPosition());
-            telemetry.addData("leftsticky ", gamepad2.left_stick_y);
-            telemetry.addData("countspercm", COUNTS_PER_CM);
-            telemetry.addData("targetAddition: ", targetAddition);
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);                                                                                                                                                                                                                                                                                                                                                                                                        // Joe balls lmao
             telemetry.addData("Current mutliplier: ", powerMultiplier);
             telemetry.update();
-
-            // This is an increment, it just adds one to the variable.
-            loopIterations++;
         }
     }
 }
