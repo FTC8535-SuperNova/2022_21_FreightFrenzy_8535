@@ -31,10 +31,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -45,20 +43,15 @@ import java.util.concurrent.Executors;
 
 /** This is sample code for an encoder driven arm motor, for the herndon HS scrimmage
  *
- * @version 1.2.6
+ * @version 1.3.1
  * @author Thomas Carver
  */
 @TeleOp(name="Sample Teleop for scrim", group="Linear Opmode")
 public class CarverSampleTeleop extends LinearOpMode {
 
     // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
-    private Servo armServo = null;
-    private DcMotor armMotor = null;
-    private CRServo duckServo = null;
-
+    private ElapsedTime runtime =   new ElapsedTime();
+    RobotHardware robot =           new RobotHardware();
     // Final variables cannot be changed once assigned, they are in all caps with underscores unlike other variables
     final static double COUNTS_PER_MOTOR_REV = 384.5; // Encoders measure in clicks, this states how many clicks per full rotation of the motor and can be found in the documentation fot the specific motor
     final static double LENGTH_OF_ARM_CM = 30; // This is A PLACEHOLDER for the length of the arm in cm, needs to be measured.
@@ -79,35 +72,25 @@ public class CarverSampleTeleop extends LinearOpMode {
 
 
         // Initialize the hardware variables. Note that the strings used here as parameters
-        // to 'get' must correspond to the names assigned during the robot configuration
-        // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        armServo = hardwareMap.get(Servo.class, "claw_servo");
-        armMotor = hardwareMap.get(DcMotor.class,"arm_motor");
-        duckServo =  hardwareMap.get(CRServo.class, "duck_servo");
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        robot.init(hardwareMap);
 
         telemetry.addData("Status", "Resetting Encoders");
         telemetry.update();
 
         // The motor encoders need to be zeroed every time you initialize
-        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Wait for it to finish resetting
         Thread.sleep(500);
 
         // You cannot be in DcMotor.RunMode.RUN_TO_POSITION without having a target pos
-        armMotor.setTargetPosition(0);
+        robot.armMotor.setTargetPosition(0);
 
 
-        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // All setModes must be done after hardware init
-        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -132,9 +115,9 @@ public class CarverSampleTeleop extends LinearOpMode {
             if (gamepad2.left_trigger == 1 && gamepad2.right_trigger == 1|| gamepad1.left_trigger == 1 && gamepad1.right_trigger == 1){
                 RobotLog.addGlobalWarningMessage("E-Stop triggered!"); // This is how you declare warning messages that stick around after program stop
 
-                leftDrive.setPower(0);
-                rightDrive.setPower(0);
-                armMotor.setPower(0);
+                robot.leftDrive.setPower(0);
+                robot.rightDrive.setPower(0);
+                robot.armMotor.setPower(0);
 
                 stop(); // The stop method is a part of linearOpMode, does some other things, and can delay stops for up to 100 days if necessary
 
@@ -147,30 +130,28 @@ public class CarverSampleTeleop extends LinearOpMode {
 
             // This is to control the servo for the claw
             if (gamepad2.a) {
-                armServo.setPosition(0.90);
+                robot.armServo.setPosition(0.90);
 
             } else if (gamepad2.b){
-                armServo.setPosition(0.30);
+                robot.armServo.setPosition(0.30);
 
             } // end claw servo if/else if
 
 
 
             // This is to control the CR (continuous rotation) servo for the ducks
-            if (gamepad2.x && !servoIsRunning){ // if it's not running this will set its status to running, and move it in the preset direction
-                duckServo.setPower(1); // CR servos use setPower rather than setPosition
-                duckServo.setDirection(DcMotorSimple.Direction.FORWARD);
-                servoIsRunning = true;
+            if (gamepad2.x){
+                robot.duckServo.setPower(1); // CR servos use setPower rather than setPosition
+                robot.duckServo.setDirection(DcMotorSimple.Direction.FORWARD);
 
-            } else if (gamepad2.y && !servoIsRunning){
-                duckServo.setPower(1);
-                duckServo.setDirection(DcMotorSimple.Direction.REVERSE);
-                servoIsRunning = true;
 
-            } else if ((servoIsRunning && gamepad2.x) || (servoIsRunning && gamepad2.y)){ // if it is running, this will set it's status to not running, and stop it
-                servoIsRunning=false;
-                duckServo.setPower(0);
+            } else if (gamepad2.y){
+                robot.duckServo.setPower(1);
+                robot.duckServo.setDirection(DcMotorSimple.Direction.REVERSE);
 
+
+            } else {
+                robot.duckServo.setPower(0);
             } // end duck servo control else if
 
 
@@ -197,25 +178,29 @@ public class CarverSampleTeleop extends LinearOpMode {
             rightPower   = Range.clip((drive - turn)*powerMultiplier, -1.0, 1.0);
 
 
-            targetAddition += ((gamepad2.left_stick_y) * COUNTS_PER_CM)/100; // by adding it to itself, you can give it high values regardless of motor position
+            targetAddition += ((gamepad2.left_stick_y) * COUNTS_PER_CM)/50; // by adding it to itself, you can give it high values regardless of motor position
             if (targetAddition < 0) {
                 targetAddition = 0;
             }
-            if (targetAddition > 351) {
-                targetAddition = 351;
+            if (targetAddition > 352) {
+                targetAddition = 352;
             }
-            armMotor.setTargetPosition((int)targetAddition); // Sets the position that the arm wants to go to
+            robot.armMotor.setTargetPosition((int)targetAddition); // Sets the position that the arm wants to go to
 
 
-            // Send calculated power to wheels, and tell the arm to use full power when moving, this can be modified later to prevent overshoots, but its fine for now
-            leftDrive.setPower(leftPower);
-            rightDrive.setPower(rightPower);
-            armMotor.setPower(1);
+            // Send calculated power to wheels
+            robot.leftDrive.setPower(leftPower);
+            robot.rightDrive.setPower(rightPower);
+
+            // Tell the arm to move slower the closer it is to target
+            double armPower = (robot.armMotor.getTargetPosition()-robot.armMotor.getCurrentPosition())/20;
+            robot.armMotor.setPower(armPower);
 
 
             // Show a bunch of variables for debugging
-            telemetry.addData("TargetPos: ", armMotor.getTargetPosition());
-            telemetry.addData("CurrentPos: ", armMotor.getCurrentPosition());
+            telemetry.addData("TargetPos: ", robot.armMotor.getTargetPosition());
+            telemetry.addData("CurrentPos: ", robot.armMotor.getCurrentPosition());
+            telemetry.addData("CurrentPower: ", armPower);
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);                                                                                                                                                                                                                                                                                                                                                                                                        // Joe balls lmao
             telemetry.addData("Current mutliplier: ", powerMultiplier);
