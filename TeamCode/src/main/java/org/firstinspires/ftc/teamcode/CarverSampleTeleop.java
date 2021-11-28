@@ -45,7 +45,7 @@ import java.util.concurrent.Executors;
 
 /** This is sample code for an encoder driven arm motor, for the herndon HS scrimmage
  *
- * @version 1.2.5
+ * @version 1.2.6
  * @author Thomas Carver
  */
 @TeleOp(name="Sample Teleop for scrim", group="Linear Opmode")
@@ -198,8 +198,12 @@ public class CarverSampleTeleop extends LinearOpMode {
 
 
             targetAddition += ((gamepad2.left_stick_y) * COUNTS_PER_CM)/100; // by adding it to itself, you can give it high values regardless of motor position
-
-
+            if (targetAddition < 0) {
+                targetAddition = 0;
+            }
+            if (targetAddition > 351) {
+                targetAddition = 351;
+            }
             armMotor.setTargetPosition((int)targetAddition); // Sets the position that the arm wants to go to
 
 
