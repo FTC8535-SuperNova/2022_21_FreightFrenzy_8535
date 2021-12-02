@@ -193,7 +193,7 @@ public class CarverSampleTeleop extends LinearOpMode {
             robot.rightDrive.setPower(rightPower);
 
             // Tell the arm to move slower the closer it is to target
-            double armPower = (robot.armMotor.getTargetPosition()-robot.armMotor.getCurrentPosition())/20;
+            double armPower = (robot.armMotor.getTargetPosition()-robot.armMotor.getCurrentPosition())/20.0;
             robot.armMotor.setPower(armPower);
 
 
