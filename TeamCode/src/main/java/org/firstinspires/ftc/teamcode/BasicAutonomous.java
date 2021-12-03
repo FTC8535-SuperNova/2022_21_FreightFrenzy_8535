@@ -80,10 +80,15 @@ public class BasicAutonomous extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        leftDrive.setPower(0.5);
-        rightDrive.setPower(0.5);
-        Thread.sleep(100);
+        //Increace Turn duration 
 
+        leftDrive.setPower(1);
+        rightDrive.setPower(-1);
+        Thread.sleep(500);
+
+        leftDrive.setPower(1);
+        rightDrive.setPower(1);
+        Thread.sleep(5000);
 
     }
 }
