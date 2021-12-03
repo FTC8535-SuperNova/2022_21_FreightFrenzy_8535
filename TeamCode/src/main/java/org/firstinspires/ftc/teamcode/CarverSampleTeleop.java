@@ -43,7 +43,7 @@ import java.util.concurrent.Executors;
 
 /** This is sample code for an encoder driven arm motor, for the herndon HS scrimmage
  *
- * @version 1.3.1
+ * @version 1.3.2
  * @author Thomas Carver
  */
 @TeleOp(name="Sample Teleop for scrim", group="Linear Opmode")
@@ -142,12 +142,12 @@ public class CarverSampleTeleop extends LinearOpMode {
             // This is to control the CR (continuous rotation) servo for the ducks
             if (gamepad2.x){
                 robot.duckServo.setPower(1); // CR servos use setPower rather than setPosition
-                robot.duckServo.setDirection(DcMotorSimple.Direction.FORWARD);
+
 
 
             } else if (gamepad2.y){
-                robot.duckServo.setPower(1);
-                robot.duckServo.setDirection(DcMotorSimple.Direction.REVERSE);
+                robot.duckServo.setPower(-1);
+
 
 
             } else {
@@ -178,12 +178,12 @@ public class CarverSampleTeleop extends LinearOpMode {
             rightPower   = Range.clip((drive - turn)*powerMultiplier, -1.0, 1.0);
 
 
-            targetAddition += ((gamepad2.left_stick_y) * COUNTS_PER_CM)/50; // by adding it to itself, you can give it high values regardless of motor position
+            targetAddition += ((-gamepad2.left_stick_y) * COUNTS_PER_CM)/5; // by adding it to itself, you can give it high values regardless of motor position
             if (targetAddition < 0) {
                 targetAddition = 0;
             }
-            if (targetAddition > 352) {
-                targetAddition = 352;
+            if (targetAddition > 1400) {
+                targetAddition = 1400;
             }
             robot.armMotor.setTargetPosition((int)targetAddition); // Sets the position that the arm wants to go to
 
