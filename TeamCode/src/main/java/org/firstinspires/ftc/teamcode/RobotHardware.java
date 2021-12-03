@@ -71,6 +71,8 @@ public class RobotHardware
         duckServo =     hwMap.get(CRServo.class, "duck_servo");
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        armMotor.setDirection(DcMotor.Direction.REVERSE);
+
 
 
 
