@@ -178,7 +178,7 @@ public class CarverSampleTeleop extends LinearOpMode {
             rightPower   = Range.clip((drive - turn)*powerMultiplier, -1.0, 1.0);
 
 
-            targetAddition += ((-gamepad2.left_stick_y) * COUNTS_PER_CM)/5; // by adding it to itself, you can give it high values regardless of motor position
+            targetAddition += ((-gamepad2.left_stick_y) * COUNTS_PER_CM); // by adding it to itself, you can give it high values regardless of motor position
             if (targetAddition < 0) {
                 targetAddition = 0;
             }
