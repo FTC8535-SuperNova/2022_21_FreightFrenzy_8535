@@ -156,12 +156,14 @@ public class BasicTeleop extends LinearOpMode {
             } // end duck servo control else if
 
 
-
+                //A is for closing the claw
             if (gamepad1.a){ // This is what I call a "virtual gearshift" it just allows you to change the speed of the robot on the fly for precision movements
                 powerMultiplier = 1; // 1 is full speed, you get the idea
 
+
+                //B is for opening the claw
             } else if (gamepad1.b){
-                powerMultiplier = 0.75;
+                powerMultiplier = 0.60;
 
             } else if (gamepad1.y){
                 powerMultiplier = 0.5;
