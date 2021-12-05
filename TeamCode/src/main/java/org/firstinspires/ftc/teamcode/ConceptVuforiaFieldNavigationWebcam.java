@@ -76,7 +76,7 @@ import java.util.List;
  */
 
 @TeleOp(name="Vuforia Field Nav Webcam", group ="Concept")
-@Disabled
+
 public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode {
 
     /*
@@ -92,7 +92,7 @@ public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            " --- AQq/tAz/////AAABmQLdTKfIqUYXtldONwoyIpt7LuTPID2/eRq05VBghKTN/JlWD5muCZjHl0d0gYu9jlfUdMyvqJRVGPVlqDouTF1bcS9DMTB1LMFNPhHmQspaaqs2MkDFxDScBncQLegWEaJfm4oiuIwAK18SHeHqg8yNoH2LQZa/HoobNlZME5Xm/YpwK8oxv+1qEMezceJ03ANFTpbPDFFmD8rOGR79Ms6/p1O1i+S8ZKrujs9E5r9pHQrD7zCr8o2bxCha3PIFyX9SS4sxeHIX4/W9Bjd++0Tb3aU7MV607WwkgQvZKYPN27X/y3f6JyiCzQFwZMpbMRtSMczsAs3zPFA9C8ZDuq+d4bL023dshULTmnUeWVzT\n  --- ";
+            "AQq/tAz/////AAABmQLdTKfIqUYXtldONwoyIpt7LuTPID2/eRq05VBghKTN/JlWD5muCZjHl0d0gYu9jlfUdMyvqJRVGPVlqDouTF1bcS9DMTB1LMFNPhHmQspaaqs2MkDFxDScBncQLegWEaJfm4oiuIwAK18SHeHqg8yNoH2LQZa/HoobNlZME5Xm/YpwK8oxv+1qEMezceJ03ANFTpbPDFFmD8rOGR79Ms6/p1O1i+S8ZKrujs9E5r9pHQrD7zCr8o2bxCha3PIFyX9SS4sxeHIX4/W9Bjd++0Tb3aU7MV607WwkgQvZKYPN27X/y3f6JyiCzQFwZMpbMRtSMczsAs3zPFA9C8ZDuq+d4bL023dshULTmnUeWVzT\n";
 
     // Since ImageTarget trackables use mm to specifiy their dimensions, we must use mm for all the physical dimension.
     // We will define some constants and conversions here
