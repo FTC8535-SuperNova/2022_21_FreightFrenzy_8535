@@ -30,6 +30,9 @@ public class Vuforia {
 
     static String vuforiaKey;
     static boolean extendedTracking;
+
+
+
     Vuforia(boolean constructorExtendedTracking,String constructorVuforiaKey){
         vuforiaKey = constructorVuforiaKey;
         extendedTracking = constructorExtendedTracking;

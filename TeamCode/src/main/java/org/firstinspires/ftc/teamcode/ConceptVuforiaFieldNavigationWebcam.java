@@ -35,6 +35,7 @@ import static java.lang.Math.*;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
@@ -69,6 +70,7 @@ public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode {
 
     private Vuforia vuforia = new Vuforia(true,"AQq/tAz/////AAABmQLdTKfIqUYXtldONwoyIpt7LuTPID2/eRq05VBghKTN/JlWD5muCZjHl0d0gYu9jlfUdMyvqJRVGPVlqDouTF1bcS9DMTB1LMFNPhHmQspaaqs2MkDFxDScBncQLegWEaJfm4oiuIwAK18SHeHqg8yNoH2LQZa/HoobNlZME5Xm/YpwK8oxv+1qEMezceJ03ANFTpbPDFFmD8rOGR79Ms6/p1O1i+S8ZKrujs9E5r9pHQrD7zCr8o2bxCha3PIFyX9SS4sxeHIX4/W9Bjd++0Tb3aU7MV607WwkgQvZKYPN27X/y3f6JyiCzQFwZMpbMRtSMczsAs3zPFA9C8ZDuq+d4bL023dshULTmnUeWVzT\n");
     private RobotHardware robot = new RobotHardware();
+    private ElapsedTime runtime  = new ElapsedTime();
 
     private void vuforiaDriveToPos(double targetX, double targetZ) {
 
@@ -95,6 +97,9 @@ public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode {
 
 
         robot.init(hardwareMap);
+
+        waitForStart();
+        runtime.reset();
 
 
         vuforiaDriveToPos(6,7);
