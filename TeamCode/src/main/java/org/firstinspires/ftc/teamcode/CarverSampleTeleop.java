@@ -104,6 +104,7 @@ public class CarverSampleTeleop extends LinearOpMode {
         double targetAddition = 0; // Variable for math
         boolean servoIsRunning = false; // Variable for toggleable servo
 
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -130,10 +131,10 @@ public class CarverSampleTeleop extends LinearOpMode {
 
             // This is to control the servo for the claw
             if (gamepad2.a) {
-                robot.armServo.setPosition(0.90);
+                robot.armServo.setPosition(0.30);
 
             } else if (gamepad2.b){
-                robot.armServo.setPosition(0.30);
+                robot.armServo.setPosition(1.5);
 
             } // end claw servo if/else if
 
@@ -178,7 +179,7 @@ public class CarverSampleTeleop extends LinearOpMode {
             rightPower   = Range.clip((drive - turn)*powerMultiplier, -1.0, 1.0);
 
 
-            targetAddition += ((-gamepad2.left_stick_y) * COUNTS_PER_CM); // by adding it to itself, you can give it high values regardless of motor position
+            targetAddition += ((-gamepad2.left_stick_y) * COUNTS_PER_CM * 1.25); // by adding it to itself, you can give it high values regardless of motor position
             if (targetAddition < 0) {
                 targetAddition = 0;
             }
