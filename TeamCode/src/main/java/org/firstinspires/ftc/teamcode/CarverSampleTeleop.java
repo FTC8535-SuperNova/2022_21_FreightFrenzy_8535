@@ -119,22 +119,21 @@ public class CarverSampleTeleop extends LinearOpMode {
                 robot.leftDrive.setPower(0);
                 robot.rightDrive.setPower(0);
                 robot.armMotor.setPower(0);
+                robot.duckServo.setPower(0);// i think that this will stop it from moving at the stat but i am not sure i will change it if it is wrong
 
                 stop(); // The stop method is a part of linearOpMode, does some other things, and can delay stops for up to 100 days if necessary
 
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 executor.shutdownNow(); // Okay, maybe this is a bit overkill, but if the method gets this far, this will force the executor service to terminate the thread
 
-            } // end e-stop if
-
-
+            } //
 
             // This is to control the servo for the claw
             if (gamepad2.a) {
                 robot.armServo.setPosition(0.30);
 
             } else if (gamepad2.b){
-                robot.armServo.setPosition(1.5);
+                robot.armServo.setPosition(0.80);
 
             } // end claw servo if/else if
 
