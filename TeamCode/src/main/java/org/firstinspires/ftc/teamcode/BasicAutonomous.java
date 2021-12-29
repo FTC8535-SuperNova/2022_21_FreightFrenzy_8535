@@ -88,7 +88,7 @@ public class BasicAutonomous extends LinearOpMode {
 
         leftDrive.setPower(1);
         rightDrive.setPower(1);
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
     }
 }
