@@ -29,9 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -46,7 +44,7 @@ public class RobotHardware
     public DcMotor rightDrive = null;
     public Servo   armServo = null;
     public DcMotor armMotor = null;
-    public CRServo duckServo = null;
+    public DcMotor duckMotor = null;
 
 
     /* local OpMode members. */
@@ -68,7 +66,7 @@ public class RobotHardware
         rightDrive =    hwMap.get(DcMotor.class, "right_drive");
         armServo =      hwMap.get(Servo.class, "claw_servo");
         armMotor =      hwMap.get(DcMotor.class,"arm_motor");
-        duckServo =     hwMap.get(CRServo.class, "duck_servo");
+        duckMotor =     hwMap.get(DcMotor.class, "duck_servo");
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
         armMotor.setDirection(DcMotor.Direction.REVERSE);
