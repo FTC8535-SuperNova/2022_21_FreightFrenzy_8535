@@ -32,7 +32,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -119,7 +118,7 @@ public class CarverSampleTeleop extends LinearOpMode {
                 robot.leftDrive.setPower(0);
                 robot.rightDrive.setPower(0);
                 robot.armMotor.setPower(0);
-                robot.duckServo.setPower(0);// i think that this will stop it from moving at the stat but i am not sure i will change it if it is wrong
+                robot.duckMotors.setPower(0);// i think that this will stop it from moving at the stat but i am not sure i will change it if it is wrong
 
                 stop(); // The stop method is a part of linearOpMode, does some other things, and can delay stops for up to 100 days if necessary
 
@@ -130,28 +129,30 @@ public class CarverSampleTeleop extends LinearOpMode {
 
             // This is to control the servo for the claw
             if (gamepad2.a) {
-                robot.armServo.setPosition(0.30);
+                robot.armServo.setPosition(0.60);
 
             } else if (gamepad2.b){
-                robot.armServo.setPosition(0.80);
+                robot.armServo.setPosition(1);
+
+                //close claw
 
             } // end claw servo if/else if
 
 
 
-            // This is to control the CR (continuous rotation) servo for the ducks
+            // This is to control the motors for the ducks
             if (gamepad2.x){
-                robot.duckServo.setPower(1); // CR servos use setPower rather than setPosition
+                robot.duckMotors.setPower(0.5);
 
 
 
             } else if (gamepad2.y){
-                robot.duckServo.setPower(-1);
+                robot.duckMotors.setPower(-0.5);
 
 
 
             } else {
-                robot.duckServo.setPower(0);
+                robot.duckMotors.setPower(0);
             } // end duck servo control else if
 
 
@@ -172,10 +173,10 @@ public class CarverSampleTeleop extends LinearOpMode {
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = gamepad1.left_stick_y;
-            double turn  =  gamepad1.left_stick_x;
+            double turn  =  gamepad1.right_stick_x;
 
-            leftPower    = Range.clip((drive + turn)*powerMultiplier, -1.0, 1.0);
-            rightPower   = Range.clip((drive - turn)*powerMultiplier, -1.0, 1.0);
+            leftPower    = Range.clip((drive*powerMultiplier) + turn, -1.0, 1.0);
+            rightPower   = Range.clip((drive*powerMultiplier) - turn, -1.0, 1.0);
 
 
             targetAddition += ((-gamepad2.left_stick_y) * COUNTS_PER_CM * 1.25); // by adding it to itself, you can give it high values regardless of motor position

@@ -44,7 +44,7 @@ public class RobotHardware
     public DcMotor rightDrive = null;
     public Servo   armServo = null;
     public DcMotor armMotor = null;
-    public DcMotor duckMotor = null;
+    public DcMotor duckMotors = null;
 
 
     /* local OpMode members. */
@@ -66,7 +66,7 @@ public class RobotHardware
         rightDrive =    hwMap.get(DcMotor.class, "right_drive");
         armServo =      hwMap.get(Servo.class, "claw_servo");
         armMotor =      hwMap.get(DcMotor.class,"arm_motor");
-        duckMotor =     hwMap.get(DcMotor.class, "duck_servo");
+        duckMotors =     hwMap.get(DcMotor.class, "duck_servo");
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
         rightDrive.setDirection(DcMotor.Direction.FORWARD);
         armMotor.setDirection(DcMotor.Direction.REVERSE);
