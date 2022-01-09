@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Basic: Autonomous Opmode", group="Linear Opmode")
+@Autonomous(name="Basic: Autonomouse Opmode2", group="Linear Opmode")
 
 public class BasicAutonomouse2 extends LinearOpMode {
 
@@ -84,11 +84,11 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         leftDrive.setPower(-1);
         rightDrive.setPower(1);
-        Thread.sleep(625);
+        Thread.sleep(600);
 
         leftDrive.setPower(1);
         rightDrive.setPower(1);
-        Thread.sleep(500);
+        Thread.sleep(750);
 
     }
 }
