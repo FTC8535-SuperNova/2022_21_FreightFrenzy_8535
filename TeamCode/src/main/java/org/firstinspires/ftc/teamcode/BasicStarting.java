@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="Basic: Autonomous Opmode", group="Linear Opmode")
 
-public class BasicAutonomous extends LinearOpMode {
+public class BasicAutonomouse2 extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -80,17 +80,16 @@ public class BasicAutonomous extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+        //Increace Turn duration
 
-
-        leftDrive.setPower(1);
-        rightDrive.setPower(-1);
-        Thread.sleep(625);
+        leftDrive.setPower(-1);
+        rightDrive.setPower(1);
+        Thread.sleep(750);
 
         leftDrive.setPower(1);
         rightDrive.setPower(1);
-        Thread.sleep(500);
+        Thread.sleep(5000);
 
     }
 }
-
-// this is for red side by Utsav (-o-)
+        //This is for the blue side by LARS :D

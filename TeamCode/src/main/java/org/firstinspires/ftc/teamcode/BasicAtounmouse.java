@@ -51,9 +51,9 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Basic: Autonomouse Opmode 2", group="Linear Opmode")
+@Autonomous(name="Basic: Autonomous Opmode", group="Linear Opmode")
 
-public class BasicAutonomouse2 extends LinearOpMode {
+public class BasicAtounmouse extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -80,10 +80,10 @@ public class BasicAutonomouse2 extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //Increace Turn duration
 
-        leftDrive.setPower(-1);
-        rightDrive.setPower(1);
+
+        leftDrive.setPower(1);
+        rightDrive.setPower(-1);
         Thread.sleep(625);
 
         leftDrive.setPower(1);
@@ -92,4 +92,5 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
     }
 }
-        //This is for the blue side by LARS :D
+
+// this is for red side by Utsav (-o-)
