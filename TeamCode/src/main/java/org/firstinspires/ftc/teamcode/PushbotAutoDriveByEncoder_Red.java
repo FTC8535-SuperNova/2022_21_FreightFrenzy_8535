@@ -30,13 +30,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Hardware;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -65,9 +61,9 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Encoder", group="Pushbot")
+@Autonomous(name="Red side autonomoose v2", group="Pushbot")
 
-public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
+public class PushbotAutoDriveByEncoder_Red extends LinearOpMode {
 
     /* Declare OpMode members. */
     RobotHardware robot   = new RobotHardware();   // Use a Pushbot's hardware
@@ -77,8 +73,7 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 6.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -93,11 +88,21 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
+        robot.leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        robot.rightDrive.setDirection(DcMotor.Direction.REVERSE);
+
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+        robot.armMotor.setTargetPosition(250);
+        robot.armMotor.setPower(1);
+
 
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
@@ -110,9 +115,12 @@ public class PushbotAutoDriveByEncoder_Linear extends LinearOpMode {
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Thread.sleep(10000); // Configurable delay so we don't interfere with the other teams robot
+        encoderDrive(0.75,  10,  10, 5.0);
+        encoderDrive(0.75,   -25, 25, 4.0);
+        encoderDrive(0.75, 56, 56, 5.0);
+        robot.armMotor.setTargetPosition(0);
         Thread.sleep(100);
 
 
