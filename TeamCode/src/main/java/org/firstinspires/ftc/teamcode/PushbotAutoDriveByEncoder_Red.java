@@ -116,12 +116,12 @@ public class PushbotAutoDriveByEncoder_Red extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Thread.sleep(10000); // Configurable delay so we don't interfere with the other teams robot
+        Thread.sleep(300); // Configurable delay so we don't interfere with the other teams robot
         encoderDrive(0.75,  10,  10, 5.0);
         encoderDrive(0.75,   -25, 25, 4.0);
         encoderDrive(0.75, 56, 56, 5.0);
-        robot.armMotor.setTargetPosition(0);
-        Thread.sleep(100);
+        robot.armMotor.setTargetPosition(250);
+        Thread.sleep(300);
 
 
 
