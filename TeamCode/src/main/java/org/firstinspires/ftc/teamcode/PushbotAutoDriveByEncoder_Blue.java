@@ -100,7 +100,7 @@ public class PushbotAutoDriveByEncoder_Blue extends LinearOpMode {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-
+        robot.armServo.setPosition(1);
         robot.armMotor.setTargetPosition(250);
         robot.armMotor.setPower(1);
 
@@ -123,10 +123,12 @@ public class PushbotAutoDriveByEncoder_Blue extends LinearOpMode {
         robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Thread.sleep(200); // Configurable delay so we don't interfere with the other teams robot
         encoderDrive(0.75,  11,  11, 5.0);
-        encoderDrive(0.75,   25, -25, 4.0);
+        encoderDrive(0.75,   25, -25, 5.0);
         encoderDrive(0.75, 56, 56, 5.0);
+        robot.armServo.setPosition(1);
         robot.armMotor.setTargetPosition(0);
-        Thread.sleep(200);
+        robot.armServo.setPosition(1);
+        Thread.sleep(300);
 
 
 

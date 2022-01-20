@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -51,7 +52,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Basic: Autonomouse Opmode2", group="Linear Opmode")
+@Autonomous(name="Shipping hub - Warehouse", group="Linear Opmode")
 
 public class BasicAutonomouse2 extends LinearOpMode {
 
@@ -59,6 +60,8 @@ public class BasicAutonomouse2 extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
+    private DcMotor armMotor = null;
+    public Servo   armServo = null;
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -70,26 +73,47 @@ public class BasicAutonomouse2 extends LinearOpMode {
         // step (using the FTC Robot Controller app on the phone).
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
+        armMotor = hardwareMap.get(DcMotor.class, "arm_motor");
+        armServo = hardwareMap.get(Servo.class, "claw_servo");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        armMotor.setDirection(DcMotor.Direction.REVERSE);
+
+
+        armMotor.setTargetPosition(0);
 
         // Wait for the game to start (driver presses PLAY)
+
+
+
+
+
         waitForStart();
         runtime.reset();
 
-        //Increace Turn duration
 
-        leftDrive.setPower(-0.75);
-        rightDrive.setPower(0.75);
+        armServo.setPosition(1);
+        Thread.sleep(300);
+
+        leftDrive.setPower(-0.3);
+        rightDrive.setPower(-0.3);
         Thread.sleep(600);
 
-        leftDrive.setPower(0.75);
-        rightDrive.setPower(0.75);
-        Thread.sleep(750);
+        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        armMotor.setTargetPosition(1300);
+        armMotor.setPower(1);
+        Thread.sleep(700);
+
+        armServo.setPosition(0);
+        Thread.sleep(300);
+
 
     }
 }
-        //This is for the blue side by LARS :D
+
+// this is for red side by Utsav (-o-)

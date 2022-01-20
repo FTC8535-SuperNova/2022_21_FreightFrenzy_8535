@@ -142,12 +142,12 @@ public class CarverSampleTeleop extends LinearOpMode {
 
             // This is to control the motors for the ducks
             if (gamepad2.x){
-                robot.duckMotors.setPower(0.5);
+                robot.duckMotors.setPower(0.6);
 
 
 
             } else if (gamepad2.y){
-                robot.duckMotors.setPower(-0.5);
+                robot.duckMotors.setPower(-0.6);
 
 
 
