@@ -100,18 +100,36 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         leftDrive.setPower(-0.3);
         rightDrive.setPower(-0.3);
-        Thread.sleep(600);
+        Thread.sleep(2300);
+
+        leftDrive.setPower(0);
+        rightDrive.setPower(0);
+        Thread.sleep(1000);
 
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         armMotor.setTargetPosition(1300);
         armMotor.setPower(1);
-        Thread.sleep(700);
+        Thread.sleep(1000);
 
         armServo.setPosition(0);
-        Thread.sleep(300);
+        Thread.sleep(2000);
 
+        armMotor.setTargetPosition(250); //lifts arm up for warehouse
+        Thread.sleep(1000);
+
+        leftDrive.setPower(0.3); //starts going straight to wall so it can turn to warehouse
+        rightDrive.setPower(0.3);
+        Thread.sleep(1600);
+
+        leftDrive.setPower(0.75); //starts turning
+        rightDrive.setPower(-0.75);
+        Thread.sleep(1000);
+
+        leftDrive.setPower(0.5); //starts going straight after turn so it goes over barricade and goes to warehouse
+        rightDrive.setPower(0.5);
+        Thread.sleep(2000);
 
     }
 }
