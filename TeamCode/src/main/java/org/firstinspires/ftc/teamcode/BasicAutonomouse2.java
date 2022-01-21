@@ -100,7 +100,7 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         leftDrive.setPower(-0.3);
         rightDrive.setPower(-0.3);
-        Thread.sleep(1900);
+        Thread.sleep(1700);
 
         leftDrive.setPower(0);
         rightDrive.setPower(0);

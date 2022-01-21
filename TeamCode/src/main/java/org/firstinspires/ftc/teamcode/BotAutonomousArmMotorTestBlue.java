@@ -61,17 +61,17 @@ public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor armMotor = null;
-    public Servo   armServo = null;
+    public Servo armServo = null;
 
     @Override
-    public void runOpMode() throws InterruptedException{
+    public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
+        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
         armMotor = hardwareMap.get(DcMotor.class, "arm_motor");
         armServo = hardwareMap.get(Servo.class, "claw_servo");
@@ -88,9 +88,6 @@ public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
 
 
-
-
-
         waitForStart();
         runtime.reset();
 
@@ -100,7 +97,7 @@ public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
 
         leftDrive.setPower(-0.3);
         rightDrive.setPower(-0.3);
-        Thread.sleep(1900);
+        Thread.sleep(1700);
 
         leftDrive.setPower(0);
         rightDrive.setPower(0);
@@ -133,6 +130,8 @@ public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
 
         armMotor.setTargetPosition(0); //lifts arm up for warehouse
         Thread.sleep(1000);
+    }
+}
 
 
 // this is for red side by Utsav (-o-)

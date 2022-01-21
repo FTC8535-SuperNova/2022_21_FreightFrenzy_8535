@@ -100,7 +100,7 @@ public class BasicAutonomousRedBottom extends LinearOpMode {
 
         leftDrive.setPower(0.3);
         rightDrive.setPower(0.3);
-        Thread.sleep(1600);
+        Thread.sleep(900);
 
         leftDrive.setPower(0);
         rightDrive.setPower(0);
