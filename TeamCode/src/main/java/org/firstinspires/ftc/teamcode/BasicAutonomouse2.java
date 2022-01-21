@@ -100,7 +100,7 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         leftDrive.setPower(-0.3);
         rightDrive.setPower(-0.3);
-        Thread.sleep(1700);
+        Thread.sleep(1650);
 
         leftDrive.setPower(0);
         rightDrive.setPower(0);
@@ -111,7 +111,7 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         armMotor.setTargetPosition(1300);
         armMotor.setPower(1);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         armServo.setPosition(0);
         Thread.sleep(2000);
@@ -119,7 +119,7 @@ public class BasicAutonomouse2 extends LinearOpMode {
         armMotor.setTargetPosition(250); //lifts arm up for warehouse
         Thread.sleep(1000);
 
-        leftDrive.setPower(0.3); //starts going straight to wall so it can turn to warehouse
+        leftDrive.setPower(0.3);  //starts going straight to wall so it can turn to warehouse
         rightDrive.setPower(0.3);
         Thread.sleep(1600);
 
@@ -129,7 +129,7 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         leftDrive.setPower(0.5); //starts going straight after turn so it goes over barricade and goes to warehouse
         rightDrive.setPower(0.5);
-        Thread.sleep(2500);
+        Thread.sleep(2000);
 
         armMotor.setTargetPosition(0); //lifts arm up for warehouse
         Thread.sleep(1000);

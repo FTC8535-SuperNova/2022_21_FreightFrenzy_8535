@@ -30,14 +30,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Hardware;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+
 
 /**
  * This file illustrates the concept of driving a path based on encoder counts.
@@ -67,7 +64,6 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @Autonomous(name="Blue side autonomoose v2", group="Pushbot")
-
 public class PushbotAutoDriveByEncoder_Blue extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -136,12 +132,12 @@ public class PushbotAutoDriveByEncoder_Blue extends LinearOpMode {
         telemetry.update();
     }
 
-    /*
+    /**
      *  Method to perform a relative move, based on encoder counts.
      *  Encoders are not reset as the move is based on the current position.
-     *  Move will stop if any of three conditions occur:
-     *  1) Move gets to the desired position
-     *  2) Move runs out of time
+     *  Move will stop if any of three conditions occur: <br>
+     *  1) Move gets to the desired position <br>
+     *  2) Move runs out of time <br>
      *  3) Driver stops the opmode running.
      */
     public void encoderDrive(double speed,
