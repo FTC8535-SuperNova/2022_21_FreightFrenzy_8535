@@ -52,9 +52,9 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name=" Blue SH top - Warehouse", group="Linear Opmode")
+@Autonomous(name=" Red SH Bottom - Warehouse", group="Linear Opmode")
 
-public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
+public class BasicAutonomousRedBottom extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -98,9 +98,9 @@ public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
         armServo.setPosition(1);
         Thread.sleep(300);
 
-        leftDrive.setPower(-0.3);
-        rightDrive.setPower(-0.3);
-        Thread.sleep(1900);
+        leftDrive.setPower(0.3);
+        rightDrive.setPower(0.3);
+        Thread.sleep(1600);
 
         leftDrive.setPower(0);
         rightDrive.setPower(0);
@@ -109,7 +109,7 @@ public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        armMotor.setTargetPosition(1300);
+        armMotor.setTargetPosition(200);
         armMotor.setPower(1);
         Thread.sleep(1000);
 
@@ -119,12 +119,12 @@ public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
         armMotor.setTargetPosition(250); //lifts arm up for warehouse
         Thread.sleep(1000);
 
-        leftDrive.setPower(0.3); //starts going straight to wall so it can turn to warehouse
-        rightDrive.setPower(0.3);
+        leftDrive.setPower(-0.3); //starts going straight to wall so it can turn to warehouse
+        rightDrive.setPower(-0.3);
         Thread.sleep(1600);
 
-        leftDrive.setPower(-0.75); //starts turning
-        rightDrive.setPower(0.75);
+        leftDrive.setPower(0.75); //starts turning
+        rightDrive.setPower(-0.75);
         Thread.sleep(1000);
 
         leftDrive.setPower(0.5); //starts going straight after turn so it goes over barricade and goes to warehouse
@@ -134,5 +134,7 @@ public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
         armMotor.setTargetPosition(0); //lifts arm up for warehouse
         Thread.sleep(1000);
 
+    }
+}
 
 // this is for red side by Utsav (-o-)
