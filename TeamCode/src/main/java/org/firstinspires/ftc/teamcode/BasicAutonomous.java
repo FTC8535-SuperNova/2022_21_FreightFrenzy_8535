@@ -116,7 +116,7 @@ public class BasicAutonomous extends LinearOpMode {
         armServo.setPosition(0);
         Thread.sleep(2000);
 
-        armMotor.setTargetPosition(250); //lifts arm up for warehouse
+        armMotor.setTargetPosition(500); //lifts arm up for warehouse
         Thread.sleep(1000);
 
         leftDrive.setPower(-0.3); //starts going straight to wall so it can turn to warehouse
@@ -129,7 +129,7 @@ public class BasicAutonomous extends LinearOpMode {
 
         leftDrive.setPower(0.5); //starts going straight after turn so it goes over barricade and goes to warehouse
         rightDrive.setPower(0.5);
-        Thread.sleep(2500);
+        Thread.sleep(2000);
 
         armMotor.setTargetPosition(0); //lifts arm up for warehouse
         Thread.sleep(1000);

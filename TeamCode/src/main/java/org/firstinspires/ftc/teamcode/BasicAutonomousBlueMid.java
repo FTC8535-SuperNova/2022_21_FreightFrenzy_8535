@@ -116,7 +116,7 @@ public class BasicAutonomousBlueMid extends LinearOpMode {
         armServo.setPosition(0);
         Thread.sleep(2000);
 
-        armMotor.setTargetPosition(250); //lifts arm up for warehouse
+        armMotor.setTargetPosition(500); //lifts arm up for warehouse
         Thread.sleep(1000);
 
         leftDrive.setPower(-0.3); //starts going straight to wall so it can turn to warehouse

@@ -52,9 +52,9 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name=" Red SH Bottom - Warehouse", group="Linear Opmode")
+@Autonomous(name=" Blue SH Bottom - Warehouse", group="Linear Opmode")
 
-public class BasicAutonomousRedBottom extends LinearOpMode {
+public class BasicAutonomousBlueBottom extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -100,7 +100,7 @@ public class BasicAutonomousRedBottom extends LinearOpMode {
 
         leftDrive.setPower(0.3);
         rightDrive.setPower(0.3);
-        Thread.sleep(1200);
+        Thread.sleep(900);
 
         leftDrive.setPower(0);
         rightDrive.setPower(0);
@@ -125,7 +125,7 @@ public class BasicAutonomousRedBottom extends LinearOpMode {
 
         leftDrive.setPower(-0.75); //starts turning
         rightDrive.setPower(0.75);
-        Thread.sleep(1000);
+        Thread.sleep(1600);
 
         leftDrive.setPower(0.5); //starts going straight after turn so it goes over barricade and goes to warehouse
         rightDrive.setPower(0.5);
