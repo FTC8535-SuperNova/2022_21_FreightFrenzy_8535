@@ -123,8 +123,8 @@ public class BasicAutonomousRedBottom extends LinearOpMode {
         rightDrive.setPower(-0.3);
         Thread.sleep(1600);
 
-        leftDrive.setPower(-0.75); //starts turning
-        rightDrive.setPower(0.75);
+        leftDrive.setPower(0.75); //starts turning
+        rightDrive.setPower(-0.75);
         Thread.sleep(1000);
 
         leftDrive.setPower(0.5); //starts going straight after turn so it goes over barricade and goes to warehouse

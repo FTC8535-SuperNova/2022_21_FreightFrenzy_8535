@@ -128,10 +128,14 @@ public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
 
         leftDrive.setPower(0.5); //starts going straight after turn so it goes over barricade and goes to warehouse
         rightDrive.setPower(0.5);
-        Thread.sleep(1000);
+        Thread.sleep(800);
 
         armMotor.setTargetPosition(200); //lifts arm up for warehouse
         Thread.sleep(1000);
+
+        leftDrive.setPower(-0.3); //starts going straight to wall so it can turn to warehouse
+        rightDrive.setPower(-0.3);
+        Thread.sleep(400);
 
         armMotor.setTargetPosition(0); //lifts arm up for warehouse
         Thread.sleep(1000);

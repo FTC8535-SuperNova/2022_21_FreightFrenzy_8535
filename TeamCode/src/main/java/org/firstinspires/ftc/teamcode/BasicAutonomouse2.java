@@ -88,9 +88,6 @@ public class BasicAutonomouse2 extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
 
 
-
-
-
         waitForStart();
         runtime.reset();
 
@@ -100,13 +97,12 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         leftDrive.setPower(-0.3);
         rightDrive.setPower(-0.3);
-        Thread.sleep(1300);
+        Thread.sleep(1350);
 
         leftDrive.setPower(0);
         rightDrive.setPower(0);
         Thread.sleep(1000);
 
-        armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         armMotor.setTargetPosition(1300);
@@ -124,20 +120,27 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         leftDrive.setPower(0.3); //starts going straight to wall so it can turn to warehouse
         rightDrive.setPower(0.3);
-        Thread.sleep(1600);
+        Thread.sleep(1000);
 
         leftDrive.setPower(0.75); //starts turning
         rightDrive.setPower(-0.75);
-        Thread.sleep(800);
+        Thread.sleep(1000);
 
         leftDrive.setPower(0.5); //starts going straight after turn so it goes over barricade and goes to warehouse
         rightDrive.setPower(0.5);
-        Thread.sleep(1500);
+        Thread.sleep(800);
+
+        armMotor.setTargetPosition(200); //lifts arm up for warehouse
+        Thread.sleep(1000);
+
+        leftDrive.setPower(-0.3); //starts going straight to wall so it can turn to warehouse
+        rightDrive.setPower(-0.3);
+        Thread.sleep(400);
 
         armMotor.setTargetPosition(0); //lifts arm up for warehouse
         Thread.sleep(1000);
-
     }
 }
+
 
 // this is for red side by Utsav (-o-)
