@@ -140,8 +140,8 @@ public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode {
         targets = this.vuforia.loadTrackablesFromAsset("FreightFrenzy");
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
-        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(targets);
+        List<VuforiaTrackable> allTrackable = new ArrayList<VuforiaTrackable>();
+        allTrackable.addAll(targets);
 
         /**
          * In order for localization to work, we need to tell the system where each target is on the field, and
@@ -196,7 +196,7 @@ public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode {
                     .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XZY, DEGREES, 90, 90, 0));
 
         /**  Let all the trackable listeners know where the camera is.  */
-        for (VuforiaTrackable trackable : allTrackables) {
+        for (VuforiaTrackable trackable : allTrackable) {
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setCameraLocationOnRobot(parameters.cameraName, cameraLocationOnRobot);
         }
 
@@ -222,7 +222,7 @@ public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode {
 
             // check all the trackable targets to see which one (if any) is visible.
             targetVisible = false;
-            for (VuforiaTrackable trackable : allTrackables) {
+            for (VuforiaTrackable trackable : allTrackable) {
                 if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
                     telemetry.addData("Visible Target", trackable.getName());
                     targetVisible = true;
@@ -254,7 +254,7 @@ public class ConceptVuforiaFieldNavigationWebcam extends LinearOpMode {
             telemetry.update();
         }
 
-        // Disable Tracking when we are done;
+        // Disable Trakcing when we are done;
         targets.deactivate();
     }
 
