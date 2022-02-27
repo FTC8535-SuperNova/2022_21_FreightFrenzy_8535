@@ -53,8 +53,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @Autonomous(name=" Red SH top - Warehouse", group="Linear Opmode")
-
-public class BasicAutonomouse2 extends LinearOpMode {
+class BasicAutonomouse2 extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();

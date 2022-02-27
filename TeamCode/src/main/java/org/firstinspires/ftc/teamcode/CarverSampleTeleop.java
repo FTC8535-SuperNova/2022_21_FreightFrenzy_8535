@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.util.RobotLog;
@@ -129,25 +130,23 @@ public class CarverSampleTeleop extends LinearOpMode {
 
             // This is to control the servo for the claw
             if (gamepad2.a) {
-                robot.armServo.setPosition(0.60);
+                robot.armServo.setPosition(0.30);
 
             } else if (gamepad2.b){
-                robot.armServo.setPosition(1);
-
-                //close claw
+                robot.armServo.setPosition(0.80);
 
             } // end claw servo if/else if
 
 
 
-            // This is to control the motors for the ducks
+            // This is to control the CR (continuous rotation) servo for the ducks
             if (gamepad2.x){
-                robot.duckMotors.setPower(0.6);
+                robot.duckMotors.setPower(1); // CR servos use setPower rather than setPosition
 
 
 
             } else if (gamepad2.y){
-                robot.duckMotors.setPower(-0.6);
+                robot.duckMotors.setPower(-1);
 
 
 
@@ -173,10 +172,10 @@ public class CarverSampleTeleop extends LinearOpMode {
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
+            double turn  =  gamepad1.left_stick_x;
 
-            leftPower    = Range.clip((drive*powerMultiplier) + turn, -1.0, 1.0);
-            rightPower   = Range.clip((drive*powerMultiplier) - turn, -1.0, 1.0);
+            leftPower    = Range.clip((drive + turn)*powerMultiplier, -1.0, 1.0);
+            rightPower   = Range.clip((drive - turn)*powerMultiplier, -1.0, 1.0);
 
 
             targetAddition += ((-gamepad2.left_stick_y) * COUNTS_PER_CM * 1.25); // by adding it to itself, you can give it high values regardless of motor position
