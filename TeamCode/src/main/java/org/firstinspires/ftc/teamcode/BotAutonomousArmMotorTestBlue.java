@@ -52,26 +52,26 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name=" Red SH top - Warehouse", group="Linear Opmode")
+@Autonomous(name=" Blue SH top - Warehouse", group="Linear Opmode")
 
-public class BasicAutonomouse2 extends LinearOpMode {
+public class BotAutonomousArmMotorTestBlue extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor armMotor = null;
-    public Servo   armServo = null;
+    public Servo armServo = null;
 
     @Override
-    public void runOpMode() throws InterruptedException{
+    public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
+        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
         armMotor = hardwareMap.get(DcMotor.class, "arm_motor");
         armServo = hardwareMap.get(Servo.class, "claw_servo");
@@ -86,9 +86,6 @@ public class BasicAutonomouse2 extends LinearOpMode {
         armMotor.setTargetPosition(0);
 
         // Wait for the game to start (driver presses PLAY)
-
-
-
 
 
         waitForStart();
@@ -111,7 +108,7 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         armMotor.setTargetPosition(1300);
         armMotor.setPower(1);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 
         armServo.setPosition(0);
         Thread.sleep(2000);
@@ -119,12 +116,12 @@ public class BasicAutonomouse2 extends LinearOpMode {
         armMotor.setTargetPosition(250); //lifts arm up for warehouse
         Thread.sleep(1000);
 
-        leftDrive.setPower(0.3);  //starts going straight to wall so it can turn to warehouse
+        leftDrive.setPower(0.3); //starts going straight to wall so it can turn to warehouse
         rightDrive.setPower(0.3);
         Thread.sleep(1600);
 
-        leftDrive.setPower(0.75); //starts turning
-        rightDrive.setPower(-0.75);
+        leftDrive.setPower(-0.75); //starts turning
+        rightDrive.setPower(0.75);
         Thread.sleep(1000);
 
         leftDrive.setPower(0.5); //starts going straight after turn so it goes over barricade and goes to warehouse
@@ -133,8 +130,8 @@ public class BasicAutonomouse2 extends LinearOpMode {
 
         armMotor.setTargetPosition(0); //lifts arm up for warehouse
         Thread.sleep(1000);
-
     }
 }
+
 
 // this is for red side by Utsav (-o-)
