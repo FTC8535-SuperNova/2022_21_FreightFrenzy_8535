@@ -155,6 +155,13 @@ public class CarverSampleTeleop extends LinearOpMode {
             } // end duck servo control else if
 
 
+            //this is for the new addition to the arm it isn't clear what they really want me to do
+            if (gamepad2.dpad_down){
+                robot.front_Arm.setPosition(2.0);
+            }else if (gamepad2.dpad_up)
+                robot.front_Arm.setPosition(0.0);
+
+
 
             if (gamepad1.a){ // This is what I call a "virtual gearshift" it just allows you to change the speed of the robot on the fly for precision movements
                 powerMultiplier = 1; // 1 is full speed, you get the idea
