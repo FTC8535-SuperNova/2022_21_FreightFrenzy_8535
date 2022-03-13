@@ -50,20 +50,16 @@ import java.util.concurrent.Executors;
 public class CarverSampleTeleop extends LinearOpMode {
 
     // Declare OpMode members.
-    private ElapsedTime runtime =   new ElapsedTime();
-    RobotHardware robot =           new RobotHardware();
+    private ElapsedTime runtime = new ElapsedTime();
+    RobotHardware robot = new RobotHardware();
     // Final variables cannot be changed once assigned, they are in all caps with underscores unlike other variables
     final static double COUNTS_PER_MOTOR_REV = 384.5; // Encoders measure in clicks, this states how many clicks per full rotation of the motor and can be found in the documentation fot the specific motor
     final static double LENGTH_OF_ARM_CM = 30; // This is A PLACEHOLDER for the length of the arm in cm, needs to be measured.
-    final static double COUNTS_PER_CM = (COUNTS_PER_MOTOR_REV)/(LENGTH_OF_ARM_CM*Math.PI);
+    final static double COUNTS_PER_CM = (COUNTS_PER_MOTOR_REV) / (LENGTH_OF_ARM_CM * Math.PI);
 
 
-
-
-
-
-
-    /** Main OpMode loop, runs until told otherwise,
+    /**
+     * Main OpMode loop, runs until told otherwise,
      *
      * @throws InterruptedException
      */
@@ -113,9 +109,8 @@ public class CarverSampleTeleop extends LinearOpMode {
             double rightPower;
 
             // This is an E-Stop or Emergency stop, there is one on the phone, but this one has additional clauses that make it specific to the program, additionally it does not require the operator to put down the controller first
-            if (gamepad2.left_trigger == 1 && gamepad2.right_trigger == 1|| gamepad1.left_trigger == 1 && gamepad1.right_trigger == 1){
+            if (gamepad2.left_trigger == 1 && gamepad2.right_trigger == 1 || gamepad1.left_trigger == 1 && gamepad1.right_trigger == 1) {
                 RobotLog.addGlobalWarningMessage("E-Stop triggered!"); // This is how you declare warning messages that stick around after program stop
-
                 robot.leftDrive.setPower(0);
                 robot.rightDrive.setPower(0);
                 robot.armMotor.setPower(0);
@@ -132,22 +127,19 @@ public class CarverSampleTeleop extends LinearOpMode {
             if (gamepad2.a) {
                 robot.armServo.setPosition(0.30);
 
-            } else if (gamepad2.b){
+            } else if (gamepad2.b) {
                 robot.armServo.setPosition(0.80);
 
             } // end claw servo if/else if
 
 
-
             // This is to control the CR (continuous rotation) servo for the ducks
-            if (gamepad2.x){
+            if (gamepad2.x) {
                 robot.duckMotors.setPower(1); // CR servos use setPower rather than setPosition
 
 
-
-            } else if (gamepad2.y){
+            } else if (gamepad2.y) {
                 robot.duckMotors.setPower(-1);
-
 
 
             } else {
@@ -155,34 +147,35 @@ public class CarverSampleTeleop extends LinearOpMode {
             } // end duck servo control else if
 
 
-            //this is for the new addition to the arm it isn't clear what they really want me to do
-            if (gamepad2.dpad_down){
-                robot.front_Arm.setPosition(2.0);
-            }else if (gamepad2.dpad_up)
-                robot.front_Arm.setPosition(0.0);
+            //this is for the new part of the arm they want it to go slower and they want it to stop at a specific spot around where it would be about 180 degrees for a cirical
+            if (gamepad2.dpad_down) {
+                robot.front_Arm.setPosition(1.0);
+            } else if (gamepad2.dpad_up) {
+                robot.front_Arm.setPosition(0.3);
 
 
+            }
 
-            if (gamepad1.a){ // This is what I call a "virtual gearshift" it just allows you to change the speed of the robot on the fly for precision movements
+
+            if (gamepad1.a) { // This is what I call a "virtual gearshift" it just allows you to change the speed of the robot on the fly for precision movements
                 powerMultiplier = 1; // 1 is full speed, you get the idea
 
-            } else if (gamepad1.b){
+            } else if (gamepad1.b) {
                 powerMultiplier = 0.5;
 
-            } else if (gamepad1.y){
+            } else if (gamepad1.y) {
                 powerMultiplier = 0.2;
 
             } // end v-gearshift  if/else if/else if/else if
 
 
-
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
             double drive = gamepad1.left_stick_y;
-            double turn  =  gamepad1.left_stick_x;
+            double turn = gamepad1.left_stick_x;
 
-            leftPower    = Range.clip((drive + turn)*powerMultiplier, -1.0, 1.0);
-            rightPower   = Range.clip((drive - turn)*powerMultiplier, -1.0, 1.0);
+            leftPower = Range.clip((drive + turn) * powerMultiplier, -1.0, 1.0);
+            rightPower = Range.clip((drive - turn) * powerMultiplier, -1.0, 1.0);
 
 
             targetAddition += ((-gamepad2.left_stick_y) * COUNTS_PER_CM * 1.25); // by adding it to itself, you can give it high values regardless of motor position
@@ -192,7 +185,7 @@ public class CarverSampleTeleop extends LinearOpMode {
             if (targetAddition > 1400) {
                 targetAddition = 1400;
             }
-            robot.armMotor.setTargetPosition((int)targetAddition); // Sets the position that the arm wants to go to
+            robot.armMotor.setTargetPosition((int) targetAddition); // Sets the position that the arm wants to go to
 
 
             // Send calculated power to wheels
@@ -200,7 +193,7 @@ public class CarverSampleTeleop extends LinearOpMode {
             robot.rightDrive.setPower(rightPower);
 
             // Tell the arm to move slower the closer it is to target
-            double armPower = (robot.armMotor.getTargetPosition()-robot.armMotor.getCurrentPosition())/20.0;
+            double armPower = (robot.armMotor.getTargetPosition() - robot.armMotor.getCurrentPosition()) / 20.0;
             robot.armMotor.setPower(armPower);
 
 
@@ -211,6 +204,7 @@ public class CarverSampleTeleop extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);                                                                                                                                                                                                                                                                                                                                                                                                        // Joe balls lmao
             telemetry.addData("Current mutliplier: ", powerMultiplier);
+            telemetry.addData("Position", robot.front_Arm.getPosition());
             telemetry.update();
         }
     }
